@@ -1,0 +1,23 @@
+﻿  GSIntro.cpp
+e:\sơn\programming_anim\trainingframework\src\gamestates\gsintro.cpp(27): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+  GSCredits.cpp
+e:\sơn\programming_anim\trainingframework\src\gamestates\gscredits.cpp(26): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+e:\sơn\programming_anim\trainingframework\src\gamestates\gscredits.cpp(32): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+e:\sơn\programming_anim\trainingframework\src\gamestates\gscredits.cpp(43): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+e:\sơn\programming_anim\trainingframework\src\gamestates\gscredits.cpp(48): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+e:\visual studio\vc\include\memory(901): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  e:\visual studio\vc\include\memory(971): note: see reference to function template instantiation 'std::_Ref_count_obj<_Ty>::_Ref_count_obj<std::shared_ptr<Shaders>&,std::shared_ptr<Font>&,const char(&)[8],TEXT_COLOR,double>(std::shared_ptr<Shaders> &,std::shared_ptr<Font> &,const char (&)[8],TEXT_COLOR &&,double &&)' being compiled
+          with
+          [
+              _Ty=Text
+          ]
+  e:\visual studio\vc\include\memory(971): note: see reference to function template instantiation 'std::_Ref_count_obj<_Ty>::_Ref_count_obj<std::shared_ptr<Shaders>&,std::shared_ptr<Font>&,const char(&)[8],TEXT_COLOR,double>(std::shared_ptr<Shaders> &,std::shared_ptr<Font> &,const char (&)[8],TEXT_COLOR &&,double &&)' being compiled
+          with
+          [
+              _Ty=Text
+          ]
+  e:\sơn\programming_anim\trainingframework\src\gamestates\gscredits.cpp(42): note: see reference to function template instantiation 'std::shared_ptr<Text> std::make_shared<Text,std::shared_ptr<Shaders>&,std::shared_ptr<Font>&,const char(&)[8],TEXT_COLOR,double>(std::shared_ptr<Shaders> &,std::shared_ptr<Font> &,const char (&)[8],TEXT_COLOR &&,double &&)' being compiled
+  Generating Code...
+Application.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
+  TrainingFramework.vcxproj -> E:\Sơn\Programming_anim\\BIN-Nvidia\TrainingFramework.exe
+  TrainingFramework.vcxproj -> E:\Sơn\Programming_anim\\BIN-Nvidia\TrainingFramework.pdb (Full PDB)

@@ -36,10 +36,30 @@ void GSMenu::Init()
 		});
 	m_listButton.push_back(button);
 
+	//settings button
+	texture = ResourceManagers::GetInstance()->GetTexture("button_setting");
+	button = std::make_shared<GameButton>(model, shader, texture);
+	button->Set2DPosition(screenWidth / 2, 350);
+	button->SetSize(200, 50);
+	button->SetOnClick([]() {
+		GameStateMachine::GetInstance()->ChangeState(StateTypes::STATE_Settings);
+	});
+	m_listButton.push_back(button);
+
+	//credits button
+	texture = ResourceManagers::GetInstance()->GetTexture("button_sample_button");
+	button = std::make_shared<GameButton>(model, shader, texture);
+	button->Set2DPosition(screenWidth / 2, 500);
+	button->SetSize(200, 50);
+	button->SetOnClick([]() {
+		GameStateMachine::GetInstance()->ChangeState(StateTypes::STATE_Credits);
+	});
+	m_listButton.push_back(button);
+
 	//exit button
 	texture = ResourceManagers::GetInstance()->GetTexture("button_quit");
 	button = std::make_shared<GameButton>(model, shader, texture);
-	button->Set2DPosition(screenWidth / 2, 300);
+	button->Set2DPosition(screenWidth / 2, 650);
 	button->SetSize(200, 50);
 	button->SetOnClick([]() {
 		exit(0);
@@ -50,7 +70,7 @@ void GSMenu::Init()
 	//text game title
 	shader = ResourceManagers::GetInstance()->GetShader("TextShader");
 	std::shared_ptr<Font> font = ResourceManagers::GetInstance()->GetFont("arialbd");
-	m_Text_gameName = std::make_shared< Text>(shader, font, "SAMPLE NAME", TEXT_COLOR::GREEN, 1.0);
+	m_Text_gameName = std::make_shared< Text>(shader, font, "RUNNING NINJA", TEXT_COLOR::PURPLE, 1.0);
 	m_Text_gameName->Set2DPosition(Vector2(screenWidth / 2 - 80, 120));
 }
 

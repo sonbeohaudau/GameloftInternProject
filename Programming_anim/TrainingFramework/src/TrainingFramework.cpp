@@ -2,6 +2,7 @@
 #include "Shaders.h"
 #include "Application.h"
 #include "utilities.h" 
+//#include "vld.h"
 
 GLint screenWidth = 480;
 GLint screenHeight = 800;

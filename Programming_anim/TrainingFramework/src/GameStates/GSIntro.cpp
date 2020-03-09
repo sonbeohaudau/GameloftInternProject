@@ -1,5 +1,6 @@
 #include "GSIntro.h"
 
+#define LOGO_SCREEN_TIME 1.3
 
 extern int screenWidth; //need get on Graphic engine
 extern int screenHeight; //need get on Graphic engine
@@ -24,14 +25,14 @@ void GSIntro::Init()
 
 	m_logo = std::make_shared<Sprite2D>(model, shader, texture);
 	m_logo->Set2DPosition(screenWidth / 2, screenHeight / 2);
-	m_logo->SetSize(150, 150);
+	m_logo->SetSize(200, 200);
 
-	texture = ResourceManagers::GetInstance()->GetTexture("Dirt");
-	auto test = std::make_shared<Sprite2D>(model, shader, texture);
-	test->Set2DPosition(screenWidth / 2, 600);
-	test->SetSize(80, 80);
+//	texture = ResourceManagers::GetInstance()->GetTexture("Dirt");
+//	auto test = std::make_shared<Sprite2D>(model, shader, texture);
+//	test->Set2DPosition(screenWidth / 2, 600);
+//	test->SetSize(80, 80);
 
-	m_listObject.push_back(test);
+//	m_listObject.push_back(test);
 }
 
 void GSIntro::Exit()
@@ -69,7 +70,7 @@ void GSIntro::HandleTouchEvents(int x, int y, bool bIsPressed)
 void GSIntro::Update(float deltaTime)
 {
 	m_time += deltaTime;
-	if (m_time > 1.3)
+	if (m_time > LOGO_SCREEN_TIME)
 	{
 		GameStateMachine::GetInstance()->ChangeState(StateTypes::STATE_Menu);
 		m_time = 0;
