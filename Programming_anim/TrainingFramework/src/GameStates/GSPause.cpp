@@ -18,7 +18,7 @@ GSPause::~GSPause()
 void GSPause::Init()
 {
 	auto model = ResourceManagers::GetInstance()->GetModel("Sprite2D");
-	auto texture = ResourceManagers::GetInstance()->GetTexture("bg_main_menu");
+	auto texture = ResourceManagers::GetInstance()->GetTexture("bg_play_2");
 
 	//BackGround
 	auto shader = ResourceManagers::GetInstance()->GetShader("TextureShader");
@@ -27,20 +27,20 @@ void GSPause::Init()
 	m_BackGround->SetSize(screenWidth, screenHeight);
 
 	//resume
-	texture = ResourceManagers::GetInstance()->GetTexture("button_resume");
+	texture = ResourceManagers::GetInstance()->GetTexture("button_back_2");
 	std::shared_ptr<GameButton> button = std::make_shared<GameButton>(model, shader, texture);
-	button->Set2DPosition(screenWidth / 2, 275);
-	button->SetSize(200, 50);
+	button->Set2DPosition(400, 450);
+	button->SetSize(GAME_BUTTON_SIZE, GAME_BUTTON_SIZE);
 	button->SetOnClick([]() {
 		GameStateMachine::GetInstance()->ChangeState(StateTypes::STATE_Play);
 	});
 	m_listButton.push_back(button);
 
 	//go back to main menu
-	texture = ResourceManagers::GetInstance()->GetTexture("button_exit_game");
+	texture = ResourceManagers::GetInstance()->GetTexture("button_main_menu");
 	button = std::make_shared<GameButton>(model, shader, texture);
-	button->Set2DPosition(screenWidth / 2, 425);
-	button->SetSize(200, 50);
+	button->Set2DPosition(800, 450);
+	button->SetSize(GAME_BUTTON_SIZE, GAME_BUTTON_SIZE);
 	button->SetOnClick([]() {
 		GameStateMachine::GetInstance()->ChangeState(StateTypes::STATE_Menu);
 	});

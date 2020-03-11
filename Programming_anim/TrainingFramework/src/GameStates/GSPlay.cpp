@@ -27,7 +27,7 @@ GSPlay::~GSPlay()
 void GSPlay::Init()
 {
 	auto model = ResourceManagers::GetInstance()->GetModel("Sprite2D");
-	auto texture = ResourceManagers::GetInstance()->GetTexture("bg_play");
+	auto texture = ResourceManagers::GetInstance()->GetTexture("bg_play_2");
 
 	//BackGround
 	auto shader = ResourceManagers::GetInstance()->GetShader("TextureShader");
@@ -36,10 +36,10 @@ void GSPlay::Init()
 	m_BackGround->SetSize(screenWidth, screenHeight);
 
 	//pause button
-	texture = ResourceManagers::GetInstance()->GetTexture("button_sample_button");
+	texture = ResourceManagers::GetInstance()->GetTexture("button_pause");
 	std::shared_ptr<GameButton> button = std::make_shared<GameButton>(model, shader, texture);
-	button->Set2DPosition(screenWidth / 2, 600);
-	button->SetSize(200, 50);
+	button->Set2DPosition(1050, 100);
+	button->SetSize(GAME_BUTTON_SIZE, GAME_BUTTON_SIZE);
 	button->SetOnClick([]() {
 		GameStateMachine::GetInstance()->ChangeState(StateTypes::STATE_Pause);
 	});
@@ -55,10 +55,10 @@ void GSPlay::Init()
 
 	// Animation
 	shader = ResourceManagers::GetInstance()->GetShader("Animation");
-	texture = ResourceManagers::GetInstance()->GetTexture("ninja");
-	std::shared_ptr<SpriteAnimation> obj = std::make_shared<SpriteAnimation>(model, shader, texture, 5, 0.08f);
+	texture = ResourceManagers::GetInstance()->GetTexture("running");
+	std::shared_ptr<SpriteAnimation> obj = std::make_shared<SpriteAnimation>(model, shader, texture, 10, 0.06f);
 	obj->Set2DPosition(240, 400);
-	obj->SetSize(160, 160);
+	obj->SetSize(160, 200);
 	m_listSpriteAnimations.push_back(obj);
 
 }

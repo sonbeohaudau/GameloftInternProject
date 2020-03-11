@@ -18,7 +18,7 @@ GSSettings::~GSSettings()
 void GSSettings::Init()
 {
 	auto model = ResourceManagers::GetInstance()->GetModel("Sprite2D");
-	auto texture = ResourceManagers::GetInstance()->GetTexture("bg_main_menu");
+	auto texture = ResourceManagers::GetInstance()->GetTexture("bg_play_2");
 
 	//BackGround
 	auto shader = ResourceManagers::GetInstance()->GetShader("TextureShader");
@@ -27,10 +27,10 @@ void GSSettings::Init()
 	m_BackGround->SetSize(screenWidth, screenHeight);
 
 	//return main menu button
-	texture = ResourceManagers::GetInstance()->GetTexture("button_resume");
+	texture = ResourceManagers::GetInstance()->GetTexture("button_back_2");
 	std::shared_ptr<GameButton> button = std::make_shared<GameButton>(model, shader, texture);
-	button->Set2DPosition(screenWidth / 2, 575);
-	button->SetSize(200, 50);
+	button->Set2DPosition(screenWidth / 2, 600);
+	button->SetSize(GAME_BUTTON_SIZE, GAME_BUTTON_SIZE);
 	button->SetOnClick([]() {
 		GameStateMachine::GetInstance()->ChangeState(StateTypes::STATE_Menu);
 	});

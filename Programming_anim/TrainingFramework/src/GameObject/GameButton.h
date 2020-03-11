@@ -1,5 +1,6 @@
 #pragma once 
 #include "Sprite2D.h"
+#define GAME_BUTTON_SIZE 120
 
 class GameButton : public Sprite2D
 {
