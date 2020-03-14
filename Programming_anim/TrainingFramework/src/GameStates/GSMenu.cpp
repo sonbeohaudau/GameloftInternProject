@@ -18,7 +18,7 @@ GSMenu::~GSMenu()
 void GSMenu::Init()
 {
 	auto model = ResourceManagers::GetInstance()->GetModel("Sprite2D");
-	auto texture = ResourceManagers::GetInstance()->GetTexture("bg_play_2");
+	auto texture = ResourceManagers::GetInstance()->GetTexture("bg_main_menu");
 
 	//BackGround
 	auto shader = ResourceManagers::GetInstance()->GetShader("TextureShader");
@@ -27,7 +27,7 @@ void GSMenu::Init()
 	m_BackGround->SetSize(screenWidth, screenHeight);
 
 	//play button
-	texture = ResourceManagers::GetInstance()->GetTexture("button_play_2");
+	texture = ResourceManagers::GetInstance()->GetTexture("button_play");
 	std::shared_ptr<GameButton> button = std::make_shared<GameButton>(model, shader, texture);
 	button->Set2DPosition(200, 600);
 	button->SetSize(GAME_BUTTON_SIZE, GAME_BUTTON_SIZE);
@@ -37,7 +37,7 @@ void GSMenu::Init()
 	m_listButton.push_back(button);
 
 	//settings button
-	texture = ResourceManagers::GetInstance()->GetTexture("button_setting_2");
+	texture = ResourceManagers::GetInstance()->GetTexture("button_settings");
 	button = std::make_shared<GameButton>(model, shader, texture);
 	button->Set2DPosition(450, 600);
 	button->SetSize(GAME_BUTTON_SIZE, GAME_BUTTON_SIZE);
@@ -70,7 +70,7 @@ void GSMenu::Init()
 	//text game title
 	shader = ResourceManagers::GetInstance()->GetShader("TextShader");
 	std::shared_ptr<Font> font = ResourceManagers::GetInstance()->GetFont("arialbd");
-	m_Text_gameName = std::make_shared< Text>(shader, font, "RUNNING NINJA", TEXT_COLOR::PURPLE, 1.0);
+	m_Text_gameName = std::make_shared< Text>(shader, font, "RUNNING NINJA", TEXT_COLOR::WHILE, 1.0);
 	m_Text_gameName->Set2DPosition(Vector2(screenWidth / 2 - 80, 120));
 }
 

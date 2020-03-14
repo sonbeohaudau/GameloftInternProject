@@ -10,6 +10,8 @@
 #include "Text.h"
 #include "SpriteAnimation.h"
 
+#define SCREEN_SPEED 3
+
 extern int screenWidth; //need get on Graphic engine
 extern int screenHeight; //need get on Graphic engine
 
@@ -27,21 +29,40 @@ GSPlay::~GSPlay()
 void GSPlay::Init()
 {
 	auto model = ResourceManagers::GetInstance()->GetModel("Sprite2D");
-	auto texture = ResourceManagers::GetInstance()->GetTexture("bg_play_2");
+	auto texture = ResourceManagers::GetInstance()->GetTexture("bg_autumn");
 
 	//BackGround
 	auto shader = ResourceManagers::GetInstance()->GetShader("TextureShader");
-	m_BackGround = std::make_shared<Sprite2D>(model, shader, texture);
-	m_BackGround->Set2DPosition(screenWidth / 2, screenHeight / 2);
-	m_BackGround->SetSize(screenWidth, screenHeight);
+	std::shared_ptr<Sprite2D> bg = std::make_shared<Sprite2D>(model, shader, texture);
+	bg = std::make_shared<Sprite2D>(model, shader, texture);
+	bg->Set2DPosition(screenWidth / 2, screenHeight / 2);
+	bg->SetSize(screenWidth, screenHeight);
+	m_listSprite2D.push_back(bg);
+
+	bg = std::make_shared<Sprite2D>(model, shader, texture);
+	bg->Set2DPosition(screenWidth * 3 / 2, screenHeight / 2);
+	bg->SetSize(screenWidth, screenHeight);
+	m_listSprite2D.push_back(bg);
+
 
 	//pause button
 	texture = ResourceManagers::GetInstance()->GetTexture("button_pause");
 	std::shared_ptr<GameButton> button = std::make_shared<GameButton>(model, shader, texture);
-	button->Set2DPosition(1050, 100);
+	button->Set2DPosition(900, 100);
 	button->SetSize(GAME_BUTTON_SIZE, GAME_BUTTON_SIZE);
 	button->SetOnClick([]() {
 		GameStateMachine::GetInstance()->ChangeState(StateTypes::STATE_Pause);
+	});
+	m_listButton.push_back(button);
+
+	//restart button
+	texture = ResourceManagers::GetInstance()->GetTexture("button_play");
+	button = std::make_shared<GameButton>(model, shader, texture);
+	button->Set2DPosition(1050, 100);
+	button->SetSize(GAME_BUTTON_SIZE, GAME_BUTTON_SIZE);
+	button->SetOnClick([]() {
+		GameStateMachine::GetInstance()->PopState();
+		GameStateMachine::GetInstance()->ChangeState(StateTypes::STATE_Play);
 	});
 	m_listButton.push_back(button);
 
@@ -57,7 +78,7 @@ void GSPlay::Init()
 	shader = ResourceManagers::GetInstance()->GetShader("Animation");
 	texture = ResourceManagers::GetInstance()->GetTexture("running");
 	std::shared_ptr<SpriteAnimation> obj = std::make_shared<SpriteAnimation>(model, shader, texture, 10, 0.06f);
-	obj->Set2DPosition(240, 400);
+	obj->Set2DPosition(240, 650);
 	obj->SetSize(160, 200);
 	m_listSpriteAnimations.push_back(obj);
 
@@ -110,11 +131,26 @@ void GSPlay::Update(float deltaTime)
 	{
 		it->Update(deltaTime);
 	}
+
+	for (auto bg : m_listSprite2D)
+	{
+		bg->Update(deltaTime);
+		bg->Set2DPosition(bg->Get2DPosition().x - SCREEN_SPEED, screenHeight / 2);
+		if (bg->Get2DPosition().x <= -screenWidth / 2) {
+			bg->Set2DPosition(screenWidth * 3 / 2, screenHeight / 2);
+		}
+	}
+
 }
 
 void GSPlay::Draw()
 {
-	m_BackGround->Draw();
+	for (auto bg : m_listSprite2D)
+	{
+		bg->Draw();
+	}
+
+	m_score->Draw();
 
 	for (auto obj : m_listSpriteAnimations)
 	{
