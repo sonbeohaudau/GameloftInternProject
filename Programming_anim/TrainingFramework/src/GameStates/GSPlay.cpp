@@ -10,10 +10,13 @@
 #include "Text.h"
 #include "SpriteAnimation.h"
 
-#define SCREEN_SPEED 3
+
+#define SCREEN_SPEED 400
 
 extern int screenWidth; //need get on Graphic engine
 extern int screenHeight; //need get on Graphic engine
+
+float actionTime;
 
 GSPlay::GSPlay()
 {
@@ -28,8 +31,10 @@ GSPlay::~GSPlay()
 
 void GSPlay::Init()
 {
+	ninja = std::make_shared<Player>();
+
 	auto model = ResourceManagers::GetInstance()->GetModel("Sprite2D");
-	auto texture = ResourceManagers::GetInstance()->GetTexture("bg_autumn");
+	auto texture = ResourceManagers::GetInstance()->GetTexture("bg_park");
 
 	//BackGround
 	auto shader = ResourceManagers::GetInstance()->GetShader("TextureShader");
@@ -108,7 +113,33 @@ void GSPlay::HandleEvents()
 
 void GSPlay::HandleKeyEvents(int key, bool bIsPressed)
 {
-	
+	if (bIsPressed = true) {
+		switch (key) {
+		
+		//SLIDE	
+		case KEY_DOWN: if (ninja->GetPlayerState() != JUMP) {
+			auto texture = ResourceManagers::GetInstance()->GetTexture("slide");
+			ninja->SetPlayerState(SLIDE); actionTime = 0.5;
+			m_listSpriteAnimations.front()->Set2DPosition(240, 680);
+			m_listSpriteAnimations.front()->SetTexture(texture); 
+		}
+			break;
+
+		//JUMP
+		case KEY_UP: if (ninja->GetPlayerState() != JUMP) {
+			auto texture = ResourceManagers::GetInstance()->GetTexture("jump");
+			ninja->SetPlayerState(JUMP); actionTime = 0.5;
+			m_listSpriteAnimations.front()->SetTexture(texture); 
+		}
+			break;
+
+		//Pause
+		case KEY_BACK: GameStateMachine::GetInstance()->ChangeState(StateTypes::STATE_Pause);
+			break;
+		default:  
+			break;
+		}		
+	}
 }
 
 void GSPlay::HandleTouchEvents(int x, int y, bool bIsPressed)
@@ -122,6 +153,23 @@ void GSPlay::HandleTouchEvents(int x, int y, bool bIsPressed)
 
 void GSPlay::Update(float deltaTime)
 {
+	if (actionTime > 0) {
+		actionTime -= deltaTime;
+		if (ninja->GetPlayerState() == JUMP) {
+			if (actionTime >= 0.25) {
+				m_listSpriteAnimations.front()->Set2DPosition(240, m_listSpriteAnimations.front()->Get2DPosition().y - deltaTime * 1000);
+			}
+			else {
+				m_listSpriteAnimations.front()->Set2DPosition(240, m_listSpriteAnimations.front()->Get2DPosition().y + deltaTime * 1000);
+			}
+		}
+		if (actionTime <= 0) { 
+			auto texture = ResourceManagers::GetInstance()->GetTexture("running");
+			m_listSpriteAnimations.front()->SetTexture(texture);
+			m_listSpriteAnimations.front()->Set2DPosition(240, 650);
+			ninja->SetPlayerState(RUN); actionTime = 0; }
+	}
+	
 	for (auto obj : m_listSpriteAnimations)
 	{
 		obj->Update(deltaTime);
@@ -135,9 +183,9 @@ void GSPlay::Update(float deltaTime)
 	for (auto bg : m_listSprite2D)
 	{
 		bg->Update(deltaTime);
-		bg->Set2DPosition(bg->Get2DPosition().x - SCREEN_SPEED, screenHeight / 2);
+		bg->Set2DPosition(bg->Get2DPosition().x - SCREEN_SPEED*deltaTime, screenHeight / 2);
 		if (bg->Get2DPosition().x <= -screenWidth / 2) {
-			bg->Set2DPosition(screenWidth * 3 / 2, screenHeight / 2);
+			bg->Set2DPosition(bg->Get2DPosition().x + 2 * screenWidth, screenHeight / 2);
 		}
 	}
 

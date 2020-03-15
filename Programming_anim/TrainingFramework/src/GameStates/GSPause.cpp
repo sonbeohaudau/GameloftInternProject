@@ -78,7 +78,15 @@ void GSPause::HandleEvents()
 
 void GSPause::HandleKeyEvents(int key, bool bIsPressed)
 {
+	if (bIsPressed == 1) {
+		switch (key) {
+		case KEY_BACK: GameStateMachine::GetInstance()->PopState();
+			break;
+		default:
+			break;
+		}
 
+	}
 }
 
 void GSPause::HandleTouchEvents(int x, int y, bool bIsPressed)

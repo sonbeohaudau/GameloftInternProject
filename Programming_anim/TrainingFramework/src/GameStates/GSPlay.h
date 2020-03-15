@@ -1,6 +1,8 @@
 #pragma once
 #include "gamestatebase.h"
 #include "GameButton.h"
+#include "GameObject\Player.h"
+#include "GameObject\Obstacle.h"
 
 class Sprite2D;
 class Sprite3D;
@@ -35,6 +37,7 @@ private:
 	//std::shared_ptr<Sprite2D> m_BackGround;
 	//std::shared_ptr<Sprite2D> m_BackGround1;
 	std::shared_ptr<Text>  m_score;
+	std::shared_ptr<Player> ninja;
 	std::vector < std::shared_ptr<Sprite2D>> m_listSprite2D;
 	std::vector < std::shared_ptr<SpriteAnimation>> m_listSpriteAnimations;
 	std::list<std::shared_ptr<GameButton>>	m_listButton;

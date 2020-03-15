@@ -71,7 +71,15 @@ void GSCredits::HandleEvents()
 
 void GSCredits::HandleKeyEvents(int key, bool bIsPressed)
 {
+	if (bIsPressed == 1) {
+		switch (key) {
+		case KEY_BACK: GameStateMachine::GetInstance()->PopState();
+			break;
+		default:
+			break;
+		}
 
+	}
 }
 
 void GSCredits::HandleTouchEvents(int x, int y, bool bIsPressed)
