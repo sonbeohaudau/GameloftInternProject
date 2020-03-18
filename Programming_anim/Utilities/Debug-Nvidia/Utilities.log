@@ -1,0 +1,17 @@
+﻿  TGA.cpp
+  MemoryOperators.cpp
+e:\sơn\running ninja\utilities\src\memoryoperators.cpp(6): warning C4566: character represented by universal-character-name '\u01A1' cannot be represented in the current code page (1252)
+e:\sơn\running ninja\utilities\src\memoryoperators.cpp(12): warning C4566: character represented by universal-character-name '\u01A1' cannot be represented in the current code page (1252)
+e:\sơn\running ninja\utilities\src\memoryoperators.cpp(52): warning C4566: character represented by universal-character-name '\u01A1' cannot be represented in the current code page (1252)
+  MemoryManager.cpp
+  U_Math.cpp
+  esUtil_win.cpp
+  esUtil.cpp
+  esShader.cpp
+e:\sơn\running ninja\utilities\src\esshader.cpp(58): warning C4566: character represented by universal-character-name '\u01A1' cannot be represented in the current code page (1252)
+e:\sơn\running ninja\utilities\src\esshader.cpp(80): warning C4566: character represented by universal-character-name '\u01A1' cannot be represented in the current code page (1252)
+e:\sơn\running ninja\utilities\src\esshader.cpp(137): warning C4566: character represented by universal-character-name '\u01A1' cannot be represented in the current code page (1252)
+  Generating Code...
+C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(1357,5): warning MSB8012: TargetPath(E:\Sơn\Running Ninja\\BIN-Nvidia\Utilities.lib) does not match the Library's OutputFile property value (E:\Sơn\Running Ninja\BIN-Nvidia\UtilitiesD.lib). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Lib.OutputFile).
+C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(1359,5): warning MSB8012: TargetName(Utilities) does not match the Library's OutputFile property value (UtilitiesD). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Lib.OutputFile).
+  Utilities.vcxproj -> E:\Sơn\Running Ninja\\BIN-Nvidia\Utilities.lib
