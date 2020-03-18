@@ -11,12 +11,11 @@
 #include "SpriteAnimation.h"
 
 
-#define SCREEN_SPEED 400
+#define SCREEN_SPEED 600
 
 extern int screenWidth; //need get on Graphic engine
 extern int screenHeight; //need get on Graphic engine
 
-float actionTime;
 
 GSPlay::GSPlay()
 {
@@ -31,15 +30,12 @@ GSPlay::~GSPlay()
 
 void GSPlay::Init()
 {
-	ninja = std::make_shared<Player>();
-
 	auto model = ResourceManagers::GetInstance()->GetModel("Sprite2D");
-	auto texture = ResourceManagers::GetInstance()->GetTexture("bg_park");
+	auto texture = ResourceManagers::GetInstance()->GetTexture("bg_autumn");
 
 	//BackGround
 	auto shader = ResourceManagers::GetInstance()->GetShader("TextureShader");
 	std::shared_ptr<Sprite2D> bg = std::make_shared<Sprite2D>(model, shader, texture);
-	bg = std::make_shared<Sprite2D>(model, shader, texture);
 	bg->Set2DPosition(screenWidth / 2, screenHeight / 2);
 	bg->SetSize(screenWidth, screenHeight);
 	m_listSprite2D.push_back(bg);
@@ -49,11 +45,29 @@ void GSPlay::Init()
 	bg->SetSize(screenWidth, screenHeight);
 	m_listSprite2D.push_back(bg);
 
+	// Obstacles
+	texture = ResourceManagers::GetInstance()->GetTexture("spike");
+	std::shared_ptr<Obstacle> obs = std::make_shared<Obstacle>(model, shader, texture);
+	obs = std::make_shared<Obstacle>(model, shader, texture);
+	obs->SetType(SPIKE);
+	obs->SetY(670);
+	obs->Set2DPosition(screenWidth * 3 / 2, obs->GetY());
+	obs->SetSize(70, 125);
+	m_listObstacle.push_back(obs);
+
+	texture = ResourceManagers::GetInstance()->GetTexture("spikemonA");
+	obs = std::make_shared<Obstacle>(model, shader, texture);
+	obs->SetType(SPIKEMONA);
+	obs->SetY(560);
+	obs->Set2DPosition(screenWidth * 5 / 2, obs->GetY());
+	obs->SetSize(114, 59);
+	m_listObstacle.push_back(obs);
+
 
 	//pause button
 	texture = ResourceManagers::GetInstance()->GetTexture("button_pause");
 	std::shared_ptr<GameButton> button = std::make_shared<GameButton>(model, shader, texture);
-	button->Set2DPosition(900, 100);
+	button->Set2DPosition(1050, 100);
 	button->SetSize(GAME_BUTTON_SIZE, GAME_BUTTON_SIZE);
 	button->SetOnClick([]() {
 		GameStateMachine::GetInstance()->ChangeState(StateTypes::STATE_Pause);
@@ -61,32 +75,35 @@ void GSPlay::Init()
 	m_listButton.push_back(button);
 
 	//restart button
-	texture = ResourceManagers::GetInstance()->GetTexture("button_play");
+/*	texture = ResourceManagers::GetInstance()->GetTexture("button_play");
 	button = std::make_shared<GameButton>(model, shader, texture);
-	button->Set2DPosition(1050, 100);
+	button->Set2DPosition(900, 100);
 	button->SetSize(GAME_BUTTON_SIZE, GAME_BUTTON_SIZE);
 	button->SetOnClick([]() {
 		GameStateMachine::GetInstance()->PopState();
 		GameStateMachine::GetInstance()->ChangeState(StateTypes::STATE_Play);
 	});
 	m_listButton.push_back(button);
-
+	*/
 
 	//show score
-	shader = ResourceManagers::GetInstance()->GetShader("TextShader");
+/*	shader = ResourceManagers::GetInstance()->GetShader("TextShader");
 	std::shared_ptr<Font> font = ResourceManagers::GetInstance()->GetFont("arialbd");
 	m_score = std::make_shared< Text>(shader, font, "score: 10", TEXT_COLOR::RED, 1.0);
 	m_score->Set2DPosition(Vector2(5, 25));
-
+	*/
 
 	// Animation
 	shader = ResourceManagers::GetInstance()->GetShader("Animation");
 	texture = ResourceManagers::GetInstance()->GetTexture("running");
-	std::shared_ptr<SpriteAnimation> obj = std::make_shared<SpriteAnimation>(model, shader, texture, 10, 0.06f);
+/*	std::shared_ptr<SpriteAnimation> obj = std::make_shared<SpriteAnimation>(model, shader, texture, 10, 0.06f);
 	obj->Set2DPosition(240, 650);
 	obj->SetSize(160, 200);
-	m_listSpriteAnimations.push_back(obj);
+	m_listSpriteAnimations.push_back(obj); */
 
+	ninja = std::make_shared<Player>(model, shader, texture, 10, 0.06f);
+	ninja->Set2DPosition(240, 650);
+	ninja->SetSize(160, 200);
 }
 
 void GSPlay::Exit()
@@ -113,33 +130,8 @@ void GSPlay::HandleEvents()
 
 void GSPlay::HandleKeyEvents(int key, bool bIsPressed)
 {
-	if (bIsPressed = true) {
-		switch (key) {
-		
-		//SLIDE	
-		case KEY_DOWN: if (ninja->GetPlayerState() != JUMP) {
-			auto texture = ResourceManagers::GetInstance()->GetTexture("slide");
-			ninja->SetPlayerState(SLIDE); actionTime = 0.5;
-			m_listSpriteAnimations.front()->Set2DPosition(240, 680);
-			m_listSpriteAnimations.front()->SetTexture(texture); 
-		}
-			break;
-
-		//JUMP
-		case KEY_UP: if (ninja->GetPlayerState() != JUMP) {
-			auto texture = ResourceManagers::GetInstance()->GetTexture("jump");
-			ninja->SetPlayerState(JUMP); actionTime = 0.5;
-			m_listSpriteAnimations.front()->SetTexture(texture); 
-		}
-			break;
-
-		//Pause
-		case KEY_BACK: GameStateMachine::GetInstance()->ChangeState(StateTypes::STATE_Pause);
-			break;
-		default:  
-			break;
-		}		
-	}
+	ninja->HandleKeyEvents(key, bIsPressed);
+	
 }
 
 void GSPlay::HandleTouchEvents(int x, int y, bool bIsPressed)
@@ -152,23 +144,7 @@ void GSPlay::HandleTouchEvents(int x, int y, bool bIsPressed)
 }
 
 void GSPlay::Update(float deltaTime)
-{
-	if (actionTime > 0) {
-		actionTime -= deltaTime;
-		if (ninja->GetPlayerState() == JUMP) {
-			if (actionTime >= 0.25) {
-				m_listSpriteAnimations.front()->Set2DPosition(240, m_listSpriteAnimations.front()->Get2DPosition().y - deltaTime * 1000);
-			}
-			else {
-				m_listSpriteAnimations.front()->Set2DPosition(240, m_listSpriteAnimations.front()->Get2DPosition().y + deltaTime * 1000);
-			}
-		}
-		if (actionTime <= 0) { 
-			auto texture = ResourceManagers::GetInstance()->GetTexture("running");
-			m_listSpriteAnimations.front()->SetTexture(texture);
-			m_listSpriteAnimations.front()->Set2DPosition(240, 650);
-			ninja->SetPlayerState(RUN); actionTime = 0; }
-	}
+{	
 	
 	for (auto obj : m_listSpriteAnimations)
 	{
@@ -189,6 +165,13 @@ void GSPlay::Update(float deltaTime)
 		}
 	}
 
+	ninja->Update(deltaTime);
+	for (auto ob : m_listObstacle)
+	{
+		ob->Update(deltaTime, SCREEN_SPEED);
+		GameEvent(ob);
+	}
+
 }
 
 void GSPlay::Draw()
@@ -198,21 +181,45 @@ void GSPlay::Draw()
 		bg->Draw();
 	}
 
-	m_score->Draw();
+	//m_score->Draw();
 
-	for (auto obj : m_listSpriteAnimations)
+/*	for (auto obj : m_listSpriteAnimations)
 	{
 		obj->Draw();
-	}
+	} */
 
-	m_score->Draw();
+	
 
 	for (auto it : m_listButton)
 	{
 		it->Draw();
 	}
+
+	ninja->Draw();
+
+	for (auto ob : m_listObstacle)
+	{
+		ob->Draw();
+	}
+
 }
 
 void GSPlay::SetNewPostionForBullet()
 {
+}
+
+void GSPlay::GameEvent(std::shared_ptr<Obstacle> ob) {
+	switch (ob->GetObstacleType()) {
+	case SPIKE: 
+		if (ob->Get2DPosition().x <= 300 && ob->Get2DPosition().x >= 160) {
+			if (ninja->GetPlayerState() != JUMP) GameStateMachine::GetInstance()->PopState();
+		}
+		break;
+	case SPIKEMONA:
+		if (ob->Get2DPosition().x <= 340 && ob->Get2DPosition().x >= 120) {
+			if (ninja->GetPlayerState() != SLIDE) GameStateMachine::GetInstance()->PopState();
+		}
+		break;
+	default: break;
+	}
 }

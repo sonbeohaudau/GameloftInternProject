@@ -6,6 +6,7 @@ private:
 	std::string		m_Text;
 	void			CaculateWorldMatrix();
 protected:
+//	void			CaculateWorldMatrix();
 	Vector2			m_Vec2DPos;
 	GLint			m_iHeight;
 	GLint			m_iWidth;
@@ -16,7 +17,7 @@ protected:
 
 public:
 	SpriteAnimation(std::shared_ptr<Models> model, std::shared_ptr<Shaders> shader, std::shared_ptr<Texture> texture, GLint numFrames, GLfloat frameTime);	
-	~SpriteAnimation();
+	virtual ~SpriteAnimation();
 
 	void		Init() override;
 	void		Draw() final;

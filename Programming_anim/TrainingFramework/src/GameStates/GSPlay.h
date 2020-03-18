@@ -29,7 +29,7 @@ public:
 	void Update(float deltaTime);
 	void Draw();
 
-	
+	void GameEvent(std::shared_ptr<Obstacle> ob);
 	void SetNewPostionForBullet();
 
 private:
@@ -39,6 +39,7 @@ private:
 	std::shared_ptr<Text>  m_score;
 	std::shared_ptr<Player> ninja;
 	std::vector < std::shared_ptr<Sprite2D>> m_listSprite2D;
+	std::vector < std::shared_ptr<Obstacle>> m_listObstacle;
 	std::vector < std::shared_ptr<SpriteAnimation>> m_listSpriteAnimations;
 	std::list<std::shared_ptr<GameButton>>	m_listButton;
 
