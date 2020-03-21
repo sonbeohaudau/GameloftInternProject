@@ -2,6 +2,7 @@
 
 extern int screenWidth; //need get on Graphic engine
 extern int screenHeight; //need get on Graphic engine
+extern float bgmLoop;
 
 GSCredits::GSCredits()
 {
@@ -97,6 +98,11 @@ void GSCredits::Update(float deltaTime)
 	for (auto it : m_listButton)
 	{
 		it->Update(deltaTime);
+	}
+	bgmLoop -= deltaTime;
+	if (bgmLoop <= 0) {
+		ResourceManagers::GetInstance()->PlaySound("bgm_main_menu");
+		bgmLoop = 14.3;
 	}
 }
 

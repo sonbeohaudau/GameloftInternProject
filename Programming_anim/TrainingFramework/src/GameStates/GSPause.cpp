@@ -2,6 +2,7 @@
 
 extern int screenWidth; //need get on Graphic engine
 extern int screenHeight; //need get on Graphic engine
+extern float bgmLoop;
 
 GSPause::GSPause()
 {
@@ -33,6 +34,7 @@ void GSPause::Init()
 	button->SetSize(GAME_BUTTON_SIZE, GAME_BUTTON_SIZE);
 	button->SetOnClick([]() {
 		ResourceManagers::GetInstance()->PlaySound("bgm_play");
+		bgmLoop = 12.8;
 		GameStateMachine::GetInstance()->PopState();
 	});
 	m_listButton.push_back(button);
@@ -46,6 +48,7 @@ void GSPause::Init()
 		GameStateMachine::GetInstance()->PopState();
 		GameStateMachine::GetInstance()->PopState();
 		ResourceManagers::GetInstance()->PlaySound("bgm_main_menu");
+		bgmLoop = 14.3;
 	});
 	m_listButton.push_back(button);
 

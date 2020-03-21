@@ -3,6 +3,7 @@
 
 extern int screenWidth; //need get on Graphic engine
 extern int screenHeight; //need get on Graphic engine
+extern float bgmLoop;
 
 GSMenu::GSMenu()
 {
@@ -82,6 +83,8 @@ void GSMenu::Init()
 	m_Text_gameName->Set2DPosition(Vector2(screenWidth / 2 - 80, -200));
 
 	ResourceManagers::GetInstance()->PlaySound("bgm_main_menu");
+	bgmLoop = 14.3;
+	
 }
 
 void GSMenu::Exit()
@@ -124,6 +127,11 @@ void GSMenu::Update(float deltaTime)
 	for (auto it : m_listButton)
 	{
 		it->Update(deltaTime);
+	}
+	bgmLoop -= deltaTime;
+	if (bgmLoop <= 0) {
+		ResourceManagers::GetInstance()->PlaySound("bgm_main_menu");
+		bgmLoop = 14.3;
 	}
 }
 

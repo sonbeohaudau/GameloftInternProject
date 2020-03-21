@@ -2,10 +2,15 @@
 #include "Shaders.h"
 #include "Application.h"
 #include "utilities.h" 
+#include <time.h>
 //#include "vld.h"
 
 GLint screenWidth = 1200; 
 GLint screenHeight = 800; 
+GLfloat bgmLoop;
+GLint gameDifficulty = 1;
+GLint character = 1;
+GLint backGround = 1;
 
 
 GLint Init(ESContext* esContext)
@@ -43,7 +48,7 @@ void CleanUp()
 
 GLint _tmain(GLint argc, _TCHAR* argv[])
 {
-
+	srand(time(NULL));
 	ESContext esContext;
 	esInitContext(&esContext);
 	esCreateWindow(&esContext, "Demo Game", screenWidth, screenHeight, ES_WINDOW_RGB | ES_WINDOW_DEPTH);

@@ -53,3 +53,20 @@ bool Gameplay::CheckCollision(std::shared_ptr<Player> ninja, std::shared_ptr<AOb
 	return 0;
 }
 
+void Gameplay::SetUp() {
+	switch (m_gamePhase) {
+	case 1:
+		SetSpeed(600);
+		SetNumObs(2);
+		break;
+	case 2:
+		break;
+	case 3:
+		break;
+	case 4:
+		break;
+	default:
+		break;
+	}
+}
+

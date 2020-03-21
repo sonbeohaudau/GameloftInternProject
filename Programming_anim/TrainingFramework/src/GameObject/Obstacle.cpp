@@ -2,6 +2,7 @@
 
 #include "Texture.h"
 #include "GameManager/ResourceManagers.h"
+#include "Gameplay.h"
 
 extern int SCREEN_SPEED;
 extern int screenWidth; 
@@ -16,6 +17,10 @@ Obstacle::Obstacle(std::shared_ptr<Models> model, std::shared_ptr<Shaders> shade
 	case SPIKE:
 		SetY(690);
 		SetSize(56, 100);
+		break;
+	case BAT:
+		SetY(-5);
+		SetSize(2, 2);
 		break;
 	case SPIKEMONA:
 		SetY(560);
@@ -33,8 +38,9 @@ Obstacle::~Obstacle()
 void Obstacle::Update(GLfloat deltaTime,int screenSpeed) {
 
 	Set2DPosition(Get2DPosition().x - screenSpeed*deltaTime, obstacleY);
-	if (Get2DPosition().x <= -screenWidth / 2) {		
+	if (Get2DPosition().x <= -screenWidth / 4) {		
 		Set2DPosition(Get2DPosition().x + 2 * screenWidth, obstacleY);
+		Gameplay::GetInstance()->SetScore(Gameplay::GetInstance()->GetScore() + 1);
 	}
 }
 

@@ -1,5 +1,4 @@
 e:\son\running ninja\trainingframework\release-nvidia\vc140.pdb
-e:\son\running ninja\trainingframework\release-nvidia\gsmenu.obj
 e:\son\running ninja\trainingframework\release-nvidia\gsintro.obj
 e:\son\running ninja\trainingframework\release-nvidia\gscredits.obj
 e:\son\running ninja\trainingframework\release-nvidia\gamestatemachine.obj
@@ -17,18 +16,18 @@ e:\son\running ninja\trainingframework\release-nvidia\player.obj
 e:\son\running ninja\trainingframework\release-nvidia\obstacle.obj
 e:\son\running ninja\trainingframework\release-nvidia\gamebutton.obj
 e:\son\running ninja\trainingframework\release-nvidia\font.obj
+e:\son\running ninja\trainingframework\release-nvidia\animatedobstacle.obj
 e:\son\running ninja\trainingframework\release-nvidia\resourcemanagers.obj
 e:\son\running ninja\trainingframework\release-nvidia\application.obj
 e:\son\running ninja\trainingframework\release-nvidia\trainingframework.obj
 e:\son\running ninja\trainingframework\release-nvidia\gssettings.obj
 e:\son\running ninja\trainingframework\release-nvidia\gsplay.obj
 e:\son\running ninja\trainingframework\release-nvidia\gspause.obj
-e:\son\running ninja\trainingframework\release-nvidia\animatedobstacle.obj
+e:\son\running ninja\trainingframework\release-nvidia\gsmenu.obj
 e:\son\running ninja\bin-nvidia\runningninja.exe
 e:\son\running ninja\bin-nvidia\runningninja.ipdb
 e:\son\running ninja\bin-nvidia\runningninja.iobj
 e:\son\running ninja\bin-nvidia\runningninja.pdb
-e:\son\running ninja\trainingframework\release-nvidia\trainingframework.vcxprojresolveassemblyreference.cache
 e:\son\running ninja\\bin-nvidia\runningninja.pdb
 e:\son\running ninja\\bin-nvidia\runningninja.exe
 e:\son\running ninja\trainingframework\release-nvidia\runningninja.tlog\cl.command.1.tlog
