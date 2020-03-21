@@ -2,7 +2,7 @@
 #include "SpriteAnimation.h"
 
 
-enum ninjaState { RUN, JUMP, SLIDE};
+enum NinjaState { RUN, JUMP, SLIDE};
 
 class Player: public SpriteAnimation
 {
@@ -10,14 +10,14 @@ class Player: public SpriteAnimation
 		Player(std::shared_ptr<Models> model, std::shared_ptr<Shaders> shader, std::shared_ptr<Texture> texture, GLint numFrames, GLfloat frameTime);
 		virtual ~Player();
 		
-		void SetPlayerState(ninjaState playerState) { m_playerState = playerState; }
-		ninjaState GetPlayerState() { return m_playerState; }
+		void		SetPlayerState(NinjaState playerState) { m_playerState = playerState; }
+		NinjaState	GetPlayerState() { return m_playerState; }
 
-		ninjaState m_playerState;
-		void Update(GLfloat deltaTime);
-		void HandleKeyEvents(int key, bool bIsPressed);
+		NinjaState	m_playerState;
+		void		Update(GLfloat deltaTime);
+		void		HandleKeyEvents(int key, bool bIsPressed);
 
-		float actionTime;
+		float		actionTime;
 		
 };
 

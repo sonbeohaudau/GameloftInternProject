@@ -29,6 +29,7 @@ void Player::Update(GLfloat deltaTime) {
 		if (actionTime <= 0) {
 			auto texture = ResourceManagers::GetInstance()->GetTexture("running");
 			SetTexture(texture);
+			ResetAnimation();
 			Set2DPosition(240, 650);
 			SetPlayerState(RUN); actionTime = 0;
 		}
@@ -56,6 +57,7 @@ void Player::HandleKeyEvents(int key, bool bIsPressed)
 			SetPlayerState(SLIDE); actionTime = 0.5;
 			Set2DPosition(240, 680);
 			SetTexture(texture);
+			ResetAnimation();
 		}
 					 break;
 
@@ -64,6 +66,7 @@ void Player::HandleKeyEvents(int key, bool bIsPressed)
 			auto texture = ResourceManagers::GetInstance()->GetTexture("jump");
 			SetPlayerState(JUMP); actionTime = 0.5;
 			SetTexture(texture);
+			ResetAnimation();
 		}
 					 break;
 

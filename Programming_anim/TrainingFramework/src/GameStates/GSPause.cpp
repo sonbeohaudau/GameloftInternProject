@@ -32,6 +32,7 @@ void GSPause::Init()
 	button->Set2DPosition(400, 450);
 	button->SetSize(GAME_BUTTON_SIZE, GAME_BUTTON_SIZE);
 	button->SetOnClick([]() {
+		ResourceManagers::GetInstance()->PlaySound("bgm_play");
 		GameStateMachine::GetInstance()->PopState();
 	});
 	m_listButton.push_back(button);
@@ -44,6 +45,7 @@ void GSPause::Init()
 	button->SetOnClick([]() {
 		GameStateMachine::GetInstance()->PopState();
 		GameStateMachine::GetInstance()->PopState();
+		ResourceManagers::GetInstance()->PlaySound("bgm_main_menu");
 	});
 	m_listButton.push_back(button);
 

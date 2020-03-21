@@ -3,6 +3,8 @@
 #include "GameButton.h"
 #include "GameObject\Player.h"
 #include "GameObject\Obstacle.h"
+#include "GameObject\Gameplay.h"
+#include "GameObject\AnimatedObstacle.h"
 
 class Sprite2D;
 class Sprite3D;
@@ -28,16 +30,21 @@ public:
 	void HandleTouchEvents(int x, int y, bool bIsPressed);
 	void Update(float deltaTime);
 	void Draw();
+	void GameOver();
 
-	void GameEvent(std::shared_ptr<Obstacle> ob);
-	void SetNewPostionForBullet();
+	//void SetNewPostionForBullet();
 
 private:
 
 	//std::shared_ptr<Sprite2D> m_BackGround;
 	//std::shared_ptr<Sprite2D> m_BackGround1;
+	bool m_update;		// =0 -> Stop update
+	bool m_dead;		// =1 -> Player die (Game over)
+	float GameOverTime;	// Time of character dead animation
 	std::shared_ptr<Text>  m_score;
-	std::shared_ptr<Player> ninja;
+	std::shared_ptr<Player> m_ninja;
+	std::shared_ptr<Gameplay> m_gameplay;
+	std::shared_ptr<AObstacle> m_bat;
 	std::vector < std::shared_ptr<Sprite2D>> m_listSprite2D;
 	std::vector < std::shared_ptr<Obstacle>> m_listObstacle;
 	std::vector < std::shared_ptr<SpriteAnimation>> m_listSpriteAnimations;
