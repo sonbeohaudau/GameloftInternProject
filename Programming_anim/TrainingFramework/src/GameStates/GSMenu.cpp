@@ -4,6 +4,8 @@
 extern int screenWidth; //need get on Graphic engine
 extern int screenHeight; //need get on Graphic engine
 extern float bgmLoop;
+extern bool bgm_on;
+extern bool button_update;
 
 GSMenu::GSMenu()
 {
@@ -75,6 +77,17 @@ void GSMenu::Init()
 		});
 	m_listButton.push_back(button);
 
+	//turn on/off music button
+	texture = ResourceManagers::GetInstance()->GetTexture("button_music_on");
+	if (bgm_on == false) texture = ResourceManagers::GetInstance()->GetTexture("button_music_off");
+	m_bgmButton = std::make_shared<GameButton>(model, shader, texture);
+	m_bgmButton->Set2DPosition(1100, 100);
+	m_bgmButton->SetSize(GAME_BUTTON_SIZE, GAME_BUTTON_SIZE);
+	m_bgmButton->SetOnClick([]() {
+		button_update = true;
+	});
+	m_listButton.push_back(m_bgmButton);
+
 
 	//text game title
 	shader = ResourceManagers::GetInstance()->GetShader("TextShader");
@@ -82,7 +95,10 @@ void GSMenu::Init()
 	m_Text_gameName = std::make_shared< Text>(shader, font, "RUNNING NINJA", TEXT_COLOR::RED, 1.0);
 	m_Text_gameName->Set2DPosition(Vector2(screenWidth / 2 - 80, -200));
 
-	ResourceManagers::GetInstance()->PlaySound("bgm_main_menu");
+	//bgm
+	ResourceManagers::GetInstance()->AddSound("bgm_play");
+	ResourceManagers::GetInstance()->AddSound("bgm_main_menu");
+	if (bgm_on == true) ResourceManagers::GetInstance()->PlaySound("bgm_main_menu");
 	bgmLoop = 14.3;
 	
 }
@@ -130,8 +146,11 @@ void GSMenu::Update(float deltaTime)
 	}
 	bgmLoop -= deltaTime;
 	if (bgmLoop <= 0) {
-		ResourceManagers::GetInstance()->PlaySound("bgm_main_menu");
+		if (bgm_on == true) ResourceManagers::GetInstance()->PlaySound("bgm_main_menu");
 		bgmLoop = 14.3;
+	}
+	if (button_update) {
+		UpdateButtons();
 	}
 }
 
@@ -144,4 +163,25 @@ void GSMenu::Draw()
 	}
 	m_GameTitle->Draw();
 	m_Text_gameName->Draw();
+}
+
+void GSMenu::UpdateButtons() {
+	
+	if (bgm_on == true) {
+		auto newTexture = ResourceManagers::GetInstance()->GetTexture("button_music_off");
+		m_bgmButton->SetTexture(newTexture);
+		bgm_on = false;
+		ResourceManagers::GetInstance()->PauseSound("bgm_main_menu");		
+	}
+	else
+	{
+		auto newTexture = ResourceManagers::GetInstance()->GetTexture("button_music_on");
+		m_bgmButton->SetTexture(newTexture);
+		bgm_on = true;
+		ResourceManagers::GetInstance()->PlaySound("bgm_main_menu");
+		bgmLoop = 14.3;
+	}
+
+	
+	button_update = false;
 }

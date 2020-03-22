@@ -3,6 +3,7 @@
 extern int screenWidth; //need get on Graphic engine
 extern int screenHeight; //need get on Graphic engine
 extern float bgmLoop;
+extern bool bgm_on;
 
 GSCredits::GSCredits()
 {
@@ -30,7 +31,7 @@ void GSCredits::Init()
 	//return main menu button
 	texture = ResourceManagers::GetInstance()->GetTexture("button_back");
 	std::shared_ptr<GameButton> button = std::make_shared<GameButton>(model, shader, texture);
-	button->Set2DPosition(screenWidth / 2, 600);
+	button->Set2DPosition(100, 100);
 	button->SetSize(GAME_BUTTON_SIZE, GAME_BUTTON_SIZE);
 	button->SetOnClick([]() {
 		GameStateMachine::GetInstance()->PopState();
@@ -101,7 +102,7 @@ void GSCredits::Update(float deltaTime)
 	}
 	bgmLoop -= deltaTime;
 	if (bgmLoop <= 0) {
-		ResourceManagers::GetInstance()->PlaySound("bgm_main_menu");
+		if (bgm_on == true) ResourceManagers::GetInstance()->PlaySound("bgm_main_menu");
 		bgmLoop = 14.3;
 	}
 }

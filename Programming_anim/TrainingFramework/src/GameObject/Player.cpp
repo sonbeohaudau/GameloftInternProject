@@ -3,6 +3,9 @@
 #include "Texture.h"
 #include "GameManager/ResourceManagers.h"
 
+#define ACTION_TIME 0.5		// Time interval in a jump/slide
+#define JUMP_POWER 1000
+
 extern int character;
 
 Player::Player(std::shared_ptr<Models> model, std::shared_ptr<Shaders> shader, std::shared_ptr<Texture> texture, GLint numFrames, GLfloat frameTime)
@@ -20,11 +23,11 @@ void Player::Update(GLfloat deltaTime) {
 	if (actionTime > 0) {
 		actionTime -= deltaTime;
 		if (m_playerState == JUMP) {
-			if (actionTime >= 0.25) {
-				Set2DPosition(240, this->Get2DPosition().y - deltaTime * 1000);
+			if (actionTime >= ACTION_TIME / 2) {
+				Set2DPosition(240, Get2DPosition().y - deltaTime * JUMP_POWER);
 			}
 			else {
-				Set2DPosition(240, this->Get2DPosition().y + deltaTime * 1000);
+				Set2DPosition(240, Get2DPosition().y + deltaTime * JUMP_POWER);
 			}
 		}
 		if (actionTime <= 0) {
@@ -57,7 +60,7 @@ void Player::HandleKeyEvents(int key, bool bIsPressed)
 		case KEY_DOWN: if (m_playerState != JUMP) {
 			auto texture = ResourceManagers::GetInstance()->GetTexture("slide");
 			if (character == 2) texture = ResourceManagers::GetInstance()->GetTexture("slide_girl");
-			SetPlayerState(SLIDE); actionTime = 0.5;
+			SetPlayerState(SLIDE); actionTime = ACTION_TIME;
 			Set2DPosition(240, 680);
 			SetTexture(texture);
 			ResetAnimation();
@@ -68,7 +71,7 @@ void Player::HandleKeyEvents(int key, bool bIsPressed)
 		case KEY_UP: if (m_playerState != JUMP) {
 			auto texture = ResourceManagers::GetInstance()->GetTexture("jump");
 			if (character == 2) texture = ResourceManagers::GetInstance()->GetTexture("jump_girl");
-			SetPlayerState(JUMP); actionTime = 0.5;
+			SetPlayerState(JUMP); actionTime = ACTION_TIME;
 			SetTexture(texture);
 			ResetAnimation();
 		}

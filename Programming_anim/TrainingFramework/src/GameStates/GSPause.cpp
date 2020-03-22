@@ -3,6 +3,8 @@
 extern int screenWidth; //need get on Graphic engine
 extern int screenHeight; //need get on Graphic engine
 extern float bgmLoop;
+extern bool bgm_on;
+extern bool button_update;
 
 GSPause::GSPause()
 {
@@ -33,7 +35,7 @@ void GSPause::Init()
 	button->Set2DPosition(400, 450);
 	button->SetSize(GAME_BUTTON_SIZE, GAME_BUTTON_SIZE);
 	button->SetOnClick([]() {
-		ResourceManagers::GetInstance()->PlaySound("bgm_play");
+		if (bgm_on == true) ResourceManagers::GetInstance()->PlaySound("bgm_play");
 		bgmLoop = 12.8;
 		GameStateMachine::GetInstance()->PopState();
 	});
@@ -47,10 +49,23 @@ void GSPause::Init()
 	button->SetOnClick([]() {
 		GameStateMachine::GetInstance()->PopState();
 		GameStateMachine::GetInstance()->PopState();
-		ResourceManagers::GetInstance()->PlaySound("bgm_main_menu");
+		GameStateMachine::GetInstance()->PopState();
+		GameStateMachine::GetInstance()->ChangeState(STATE_Menu);
+		if (bgm_on == true) ResourceManagers::GetInstance()->PlaySound("bgm_main_menu");
 		bgmLoop = 14.3;
 	});
 	m_listButton.push_back(button);
+
+	//turn on/off music button
+	texture = ResourceManagers::GetInstance()->GetTexture("button_music_on");
+	if (bgm_on == false) texture = ResourceManagers::GetInstance()->GetTexture("button_music_off");
+	m_bgmButton = std::make_shared<GameButton>(model, shader, texture);
+	m_bgmButton->Set2DPosition(1100, 100);
+	m_bgmButton->SetSize(GAME_BUTTON_SIZE, GAME_BUTTON_SIZE);
+	m_bgmButton->SetOnClick([]() {
+		button_update = true;
+	});
+	m_listButton.push_back(m_bgmButton);
 
 
 	//"Paused" text
@@ -58,6 +73,8 @@ void GSPause::Init()
 	std::shared_ptr<Font> font = ResourceManagers::GetInstance()->GetFont("arialbd");
 	m_Text_paused = std::make_shared< Text>(shader, font, "PAUSED", TEXT_COLOR::RED, 1.0);
 	m_Text_paused->Set2DPosition(Vector2(screenWidth / 2 - 80, 120));
+
+	ResourceManagers::GetInstance()->PauseSound("bgm_play");
 }
 
 void GSPause::Exit()
@@ -83,15 +100,7 @@ void GSPause::HandleEvents()
 
 void GSPause::HandleKeyEvents(int key, bool bIsPressed)
 {
-	if (bIsPressed == 1) {
-		switch (key) {
-		case KEY_BACK: GameStateMachine::GetInstance()->PopState();
-			break;
-		default:
-			break;
-		}
 
-	}
 }
 
 void GSPause::HandleTouchEvents(int x, int y, bool bIsPressed)
@@ -110,6 +119,9 @@ void GSPause::Update(float deltaTime)
 	{
 		it->Update(deltaTime);
 	}
+	if (button_update) {
+		UpdateButtons();
+	}
 }
 
 void GSPause::Draw()
@@ -120,4 +132,22 @@ void GSPause::Draw()
 		it->Draw();
 	}
 	m_Text_paused->Draw();
+}
+
+void GSPause::UpdateButtons() {
+
+	if (bgm_on == true) {
+		auto newTexture = ResourceManagers::GetInstance()->GetTexture("button_music_off");
+		m_bgmButton->SetTexture(newTexture);
+		bgm_on = false;
+	}
+	else
+	{
+		auto newTexture = ResourceManagers::GetInstance()->GetTexture("button_music_on");
+		m_bgmButton->SetTexture(newTexture);
+		bgm_on = true;
+	}
+
+
+	button_update = false;
 }

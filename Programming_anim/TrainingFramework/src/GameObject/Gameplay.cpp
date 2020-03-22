@@ -56,17 +56,30 @@ bool Gameplay::CheckCollision(std::shared_ptr<Player> ninja, std::shared_ptr<AOb
 void Gameplay::SetUp() {
 	switch (m_gamePhase) {
 	case 1:
-		SetSpeed(600);
+		SetSpeed(800);
 		SetNumObs(2);
 		break;
 	case 2:
+		SetSpeed(1000);
+		SetNumObs(3);
 		break;
 	case 3:
+		SetSpeed(1200);
+		SetNumObs(4);
 		break;
 	case 4:
+		SetSpeed(1500);
+		SetNumObs(5);
 		break;
 	default:
 		break;
+	}
+}
+
+void Gameplay::AdvanceNextPhase() {
+	if (m_gamePhase < 4) {
+		SetPhase(m_gamePhase + 1);
+		SetUp();
 	}
 }
 

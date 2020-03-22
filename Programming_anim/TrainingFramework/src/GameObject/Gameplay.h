@@ -12,7 +12,7 @@ class Gameplay: public CSingleton<Gameplay>
 		int m_score;
 		int m_gamePhase;
 		int m_screenSpeed;	
-		int m_numOfObs;		// number of obstacle types available in a phase
+		int m_numOfObs;		// number of obstacle types available in a phase	
 
 	public:
 		Gameplay() {}
@@ -28,6 +28,7 @@ class Gameplay: public CSingleton<Gameplay>
 		void SetNumObs(int numObs) { m_numOfObs = numObs; }
 
 		void SetUp();
+		void AdvanceNextPhase();
 		bool CheckCollision(std::shared_ptr<Player> ninja, std::shared_ptr<Obstacle> ob);
 		bool CheckCollision(std::shared_ptr<Player> ninja, std::shared_ptr<AObstacle> ob);
 

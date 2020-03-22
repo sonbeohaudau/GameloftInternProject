@@ -11,6 +11,8 @@ GLfloat bgmLoop;
 GLint gameDifficulty = 1;
 GLint character = 1;
 GLint backGround = 1;
+bool bgm_on = true;
+bool button_update = false;
 
 
 GLint Init(ESContext* esContext)
