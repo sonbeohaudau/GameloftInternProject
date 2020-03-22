@@ -37,7 +37,7 @@ void GSGameOver::Init()
 		GameStateMachine::GetInstance()->ChangeState(STATE_Play);
 		ResourceManagers::GetInstance()->PlaySound("bgm_play");
 		bgmLoop = 12.8;
-		
+
 	});
 	m_listButton.push_back(button);
 
@@ -90,7 +90,7 @@ void GSGameOver::HandleEvents()
 
 void GSGameOver::HandleKeyEvents(int key, bool bIsPressed)
 {
-	
+
 }
 
 void GSGameOver::HandleTouchEvents(int x, int y, bool bIsPressed)
