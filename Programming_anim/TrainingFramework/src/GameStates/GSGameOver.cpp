@@ -3,6 +3,7 @@
 extern int screenWidth; //need get on Graphic engine
 extern int screenHeight; //need get on Graphic engine
 extern float bgmLoop;
+extern bool bgm_on;
 
 GSGameOver::GSGameOver()
 {
@@ -35,7 +36,7 @@ void GSGameOver::Init()
 	button->SetOnClick([]() {
 		GameStateMachine::GetInstance()->PopState();
 		GameStateMachine::GetInstance()->ChangeState(STATE_Play);
-		ResourceManagers::GetInstance()->PlaySound("bgm_play");
+		if (bgm_on == true) ResourceManagers::GetInstance()->PlaySound("bgm_play");
 		bgmLoop = 12.8;
 
 	});
@@ -48,7 +49,7 @@ void GSGameOver::Init()
 	button->SetSize(GAME_BUTTON_SIZE, GAME_BUTTON_SIZE);
 	button->SetOnClick([]() {
 		GameStateMachine::GetInstance()->PopState();
-		ResourceManagers::GetInstance()->PlaySound("bgm_main_menu");
+		if (bgm_on == true) ResourceManagers::GetInstance()->PlaySound("bgm_main_menu");
 		bgmLoop = 14.3;
 	});
 	m_listButton.push_back(button);
