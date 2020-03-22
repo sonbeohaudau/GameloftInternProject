@@ -1,5 +1,5 @@
 e:\son\running ninja\trainingframework\release-nvidia\vc140.pdb
-e:\son\running ninja\trainingframework\release-nvidia\gsintro.obj
+e:\son\running ninja\trainingframework\release-nvidia\gsgameover.obj
 e:\son\running ninja\trainingframework\release-nvidia\gscredits.obj
 e:\son\running ninja\trainingframework\release-nvidia\gamestatemachine.obj
 e:\son\running ninja\trainingframework\release-nvidia\gamestatebase.obj
@@ -24,12 +24,9 @@ e:\son\running ninja\trainingframework\release-nvidia\gssettings.obj
 e:\son\running ninja\trainingframework\release-nvidia\gsplay.obj
 e:\son\running ninja\trainingframework\release-nvidia\gspause.obj
 e:\son\running ninja\trainingframework\release-nvidia\gsmenu.obj
-e:\son\running ninja\trainingframework\release-nvidia\gsgameover.obj
+e:\son\running ninja\trainingframework\release-nvidia\gsintro.obj
 e:\son\running ninja\bin-nvidia\runningninja.exe
-e:\son\running ninja\bin-nvidia\runningninja.ipdb
-e:\son\running ninja\bin-nvidia\runningninja.iobj
 e:\son\running ninja\bin-nvidia\runningninja.pdb
-e:\son\running ninja\trainingframework\release-nvidia\trainingframework.vcxprojresolveassemblyreference.cache
 e:\son\running ninja\\bin-nvidia\runningninja.pdb
 e:\son\running ninja\\bin-nvidia\runningninja.exe
 e:\son\running ninja\trainingframework\release-nvidia\runningninja.tlog\cl.command.1.tlog
