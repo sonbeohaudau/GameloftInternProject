@@ -15,6 +15,7 @@
 #define DEAD_ANIMATION_TIME 1
 
 //#define GOD_MODE
+//#define FOCUS_MODE
 
 extern int screenWidth; //need get on Graphic engine
 extern int screenHeight; //need get on Graphic engine
@@ -46,6 +47,10 @@ void GSPlay::Init()
 	auto model = ResourceManagers::GetInstance()->GetModel("Sprite2D");
 	auto texture = ResourceManagers::GetInstance()->GetTexture("bg_autumn");
 	if (backGround == 2) texture = ResourceManagers::GetInstance()->GetTexture("bg_park");
+
+#ifdef FOCUS_MODE
+	texture = ResourceManagers::GetInstance()->GetTexture("bg_focus");
+#endif
  
 	auto shader = ResourceManagers::GetInstance()->GetShader("TextureShader");
 	std::shared_ptr<Sprite2D> bg = std::make_shared<Sprite2D>(model, shader, texture);
@@ -62,10 +67,10 @@ void GSPlay::Init()
 	texture = ResourceManagers::GetInstance()->GetTexture("spike");
 
 	m_obstacle1 = std::make_shared<Obstacle>(model, shader, texture, SPIKE);
-	m_obstacle1->Set2DPosition(screenWidth * 3 / 2, m_obstacle1->GetY());
+	m_obstacle1->Set2DPosition(screenWidth * 5 / 2, m_obstacle1->GetY());
 
 	m_obstacle2 = std::make_shared<Obstacle>(model, shader, texture, BAT);
-	m_obstacle2->Set2DPosition(screenWidth * 5 / 2, m_obstacle2->GetY());
+	m_obstacle2->Set2DPosition(screenWidth * 7 / 2, m_obstacle2->GetY());
 	
 
 	//pause button
@@ -144,7 +149,7 @@ void GSPlay::HandleKeyEvents(int key, bool bIsPressed)
 {
 	if (m_update == true) m_ninja->HandleKeyEvents(key, bIsPressed);
 	if (bIsPressed == true) {
-		if (key == 27) {
+		if (key == KEY_BACK) {
 			GameStateMachine::GetInstance()->ChangeState(StateTypes::STATE_Pause);
 		}
 	}
@@ -184,7 +189,8 @@ void GSPlay::Update(float deltaTime)
 				bg->Set2DPosition(bg->Get2DPosition().x + 2 * screenWidth, screenHeight / 2);
 			}
 		}
-		
+
+	
 		// Player and obstacle's animation + check collision
 		m_ninja->Update(deltaTime);
 

@@ -42,12 +42,17 @@ void GSCredits::Init()
 	shader = ResourceManagers::GetInstance()->GetShader("TextShader");
 	std::shared_ptr<Font> font = ResourceManagers::GetInstance()->GetFont("arialbd");
 	m_Text_credits1 = std::make_shared< Text>(shader, font, "CREDITS", TEXT_COLOR::RED, 1.0);
-	m_Text_credits1->Set2DPosition(Vector2(screenWidth / 2 - 80, 120));
-
-	//"CREDITS" text
+	m_Text_credits1->Set2DPosition(Vector2(screenWidth / 2 - 30, 120));
 
 	m_Text_credits2 = std::make_shared< Text>(shader, font, "THANH SON", TEXT_COLOR::BLUE, 1.0);
-	m_Text_credits2->Set2DPosition(Vector2(screenWidth / 2 - 80, 300));
+	m_Text_credits2->Set2DPosition(Vector2(screenWidth / 2 - 50, 220));
+
+	//"Special thanks" text
+	m_Text_thanks1 = std::make_shared< Text>(shader, font, "SPECIAL THANKS", TEXT_COLOR::RED, 1.0);
+	m_Text_thanks1->Set2DPosition(Vector2(screenWidth / 2 - 80, 350));
+
+	m_Text_thanks2 = std::make_shared< Text>(shader, font, "GAMELOFT", TEXT_COLOR::BLUE, 1.0);
+	m_Text_thanks2->Set2DPosition(Vector2(screenWidth / 2 - 40, 450));
 }
 
 void GSCredits::Exit()
@@ -116,4 +121,6 @@ void GSCredits::Draw()
 	}
 	m_Text_credits1->Draw();
 	m_Text_credits2->Draw();
+	m_Text_thanks1->Draw();
+	m_Text_thanks2->Draw();
 }

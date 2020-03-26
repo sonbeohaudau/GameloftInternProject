@@ -17,21 +17,50 @@ extern int screenHeight;
 Obstacle::Obstacle(std::shared_ptr<Models> model, std::shared_ptr<Shaders> shader, std::shared_ptr<Texture> texture, ObstacleType type)
 	: Sprite2D(model, shader, texture)
 {
-	SetType(type);
-	switch(type) {
-	case SPIKE:
+	std::shared_ptr<Texture> newTexture;
+	switch (type) {
+	case SPIKE:		
+		newTexture = ResourceManagers::GetInstance()->GetTexture("spike");
+		SetType(SPIKE);
 		SetY(690);
 		SetSize(56, 100);
-		SetMove(0);
 		break;
 	case BAT:
+		newTexture = ResourceManagers::GetInstance()->GetTexture("spike");
+		SetType(BAT);
 		SetY(-5);
 		SetSize(2, 2);
-		SetMove(0);
 		break;
-	default: break;
+	case TINY:
+		newTexture = ResourceManagers::GetInstance()->GetTexture("spikemonA");
+		SetType(TINY);
+		SetY(720);
+		SetSize(20, 10);
+		break;
+	case HOP:
+		newTexture = ResourceManagers::GetInstance()->GetTexture("spikemonB");
+		SetType(HOP);
+		SetY(710);
+		SetSize(180, 100);
+		break;
+	case COBRA_SPIKE:
+		newTexture = ResourceManagers::GetInstance()->GetTexture("spike");
+		SetType(COBRA_SPIKE);
+		SetY(690);
+		SetSize(56, 100);
+		break;
+	default:
+		break;
 	}
-	
+	SetTexture(newTexture);
+	SetMove(0);
+}
+
+Obstacle::Obstacle(std::shared_ptr<Models> model, std::shared_ptr<Shaders> shader, std::shared_ptr<Texture> texture)
+	: Sprite2D(model, shader, texture)
+{
+	SetMove(0);
+	SwitchType();
 }
 
 Obstacle::~Obstacle()
@@ -41,20 +70,20 @@ Obstacle::~Obstacle()
 void Obstacle::Update(GLfloat deltaTime,int speed) {
 	Set2DPosition(Get2DPosition().x - speed*deltaTime, m_obstacleY);
 
-	// TINY special move
+	// TINY special move 
 	if (m_type == TINY && Get2DPosition().x <= screenWidth && Get2DPosition().x > 10 && m_specialMove == 0) {
-			Gameplay::GetInstance()->SetSpeed(speed * TINY_SPEED_BOOST);
-			SetMove(1);				
+		Gameplay::GetInstance()->SetSpeed(speed * TINY_SPEED_BOOST);
+		SetMove(1);		// Speed Up		
 	}
 	if (m_specialMove == 1 && Get2DPosition().x <= 10) {
 	//	Gameplay::GetInstance()->SetSpeed(speed / TINY_SPEED_BOOST);
 		Gameplay::GetInstance()->SetUp();
-		SetMove(0);
+		SetMove(0);		// Back to normal
 	}
 
 	// HOP special move
 	if (m_type == HOP && Get2DPosition().x <= HOP_JUMP_MOMENT && Get2DPosition().x > 10 && m_specialMove == 0) {
-		SetMove(2);
+		SetMove(2);		// Jump	
 	}
 
 	if (m_specialMove == 2 && Get2DPosition().y >= 500) {
@@ -69,7 +98,7 @@ void Obstacle::Update(GLfloat deltaTime,int speed) {
 	// COBRA SPIKE special move
 	if (m_type == COBRA_SPIKE && Get2DPosition().x <= COBRA_PAUSE_MOMENT && Get2DPosition().x > 10 && Get2DPosition().x > 10 && m_specialMove == 0) {
 		Gameplay::GetInstance()->SetSpeed(0);
-		SetMove(3);
+		SetMove(3);		// Pause
 		SetTime(COBRA_PAUSE_TIME);
 	}
 	if (m_specialMove == 3 && m_actionTime > 0) {
@@ -85,7 +114,7 @@ void Obstacle::Update(GLfloat deltaTime,int speed) {
 
 	
 	// Obstacle passed successfully
-	if (Get2DPosition().x <= -screenWidth / 4) {		
+	if (Get2DPosition().x <= -screenWidth / 10) {		
 		Set2DPosition(Get2DPosition().x + 2 * screenWidth, m_obstacleY);
 		int score = Gameplay::GetInstance()->GetScore();
 		Gameplay::GetInstance()->SetScore(score + 1);

@@ -13,12 +13,13 @@ class Obstacle : public Sprite2D
 			// m_specialMove = 0: normal movement
 			// m_specialMove = 1: move a bit faster
 			// m_specialMove = 2: jump midway
-			// m_specialMove = 3: pause midway 2s
+			// m_specialMove = 3: pause midway a short amount of time
 
 		GLfloat			m_actionTime;		// special time interval for some special moves
 
 	public:
 		Obstacle(std::shared_ptr<Models> model, std::shared_ptr<Shaders> shader, std::shared_ptr<Texture> texture, ObstacleType type);
+		Obstacle(std::shared_ptr<Models> model, std::shared_ptr<Shaders> shader, std::shared_ptr<Texture> texture);
 		virtual ~Obstacle();
 
 		ObstacleType	GetObstacleType() { return m_type; }
